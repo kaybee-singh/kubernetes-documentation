@@ -83,3 +83,24 @@ Commercial support is available at
 ```
 6. From Browser
    ![From Browser](nginx-browser.png)
+
+7. If you cluster is running on a Public cloud then get the external IP address of your cluster and then provide the port no. For instance I have below cluster running on Linode cloud. 192.104.207.225 is the external IP which can be used to access the services which are exposed by NordPort. 
+
+```bash
+$ kubectl get nodes -o wide
+NAME                            STATUS   ROLES    AGE   VERSION   INTERNAL-IP      EXTERNAL-IP       OS-IMAGE                         KERNEL-VERSION         CONTAINER-RUNTIME
+lke2735-295216-4ac60000   Ready    <none>   12m   v1.30.1   192.168.122.77   192.104.207.225   Debian GNU/Linux 12 (bookworm)   6.1.0-22-cloud-amd64   containerd://1.7.18
+````
+8. In below command I have a service running on 30586 port of node which can be accessed by External-IP:Port of cluster
+```bash
+$ kubectl get svc  -A
+NAMESPACE     NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                  AGE
+default       kubernetes      ClusterIP   10.128.0.1      <none>        443/TCP                  11m
+default       nginx-service   NodePort    10.128.202.81   <none>        80:30586/TCP             2m7s
+kube-system   kube-dns        ClusterIP   10.128.0.10     <none>        53/UDP,53/TCP,9153/TCP   10m
+
+$ curl http://192.104.207.225:30586/
+
+Welcome to Nginx
+
+```
