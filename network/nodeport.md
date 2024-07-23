@@ -81,4 +81,5 @@ Commercial support is available at
 </html>
 
 ```
-
+6. From Browser
+   ![From Browser](nginx-browser.png)
